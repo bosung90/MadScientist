@@ -17,7 +17,7 @@ public class CMMulticastSender : MonoBehaviour
 	private UdpClient udp_client;
 
 	void Update() {
-		if( Input.GetMouseButton(0) )  {
+		if( Input.GetMouseButtonDown(0) )  {
 			this.ExampleBroadcast();
 		}
 	}

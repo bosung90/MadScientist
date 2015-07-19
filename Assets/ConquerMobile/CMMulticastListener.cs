@@ -23,7 +23,7 @@ public class CMMulticastListener : MonoBehaviour
 	}
 	
 	void StartListen ()
-	{
+	{ 
 		// multicast receive setup
 		remote_end = new IPEndPoint (IPAddress.Any, port);
 		udp_client = new UdpClient (remote_end);
