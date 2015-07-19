@@ -63,8 +63,6 @@ public class CreateSampleMesh : MonoBehaviour {
 		material.SetTexture ("_MainTex", texture );
 		GetComponent<Renderer> ().material = material;
 
-//		transform.GetComponent<MeshFilter> ().mesh = mesh;
-		
 		mesh.name = "MyOwnObject";
 		
 		mesh.vertices = vertices; //Just do this... Use Logic...
@@ -80,7 +78,6 @@ public class CreateSampleMesh : MonoBehaviour {
 		if(e!=null)
 			this.json_data = e.Result;
 
-		Debug.Log ("Load Done: " + json_data.Substring(0, 10));
 		JSONNode parseJson = JSON.Parse (json_data);
 		
 		var verticesObjArr = parseJson["vertices"].AsArray;
@@ -122,7 +119,6 @@ public class CreateSampleMesh : MonoBehaviour {
 		}
 		
 		int[] Triangles = facesArr;
-//		LoadMesh (Vertex, UV_MaterialDisplay, Triangles);
 		this.Vertex = Vertex;
 		this.UV_MaterialDisplay = UV_MaterialDisplay;
 		this.Triangles = Triangles;
