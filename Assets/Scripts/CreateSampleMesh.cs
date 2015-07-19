@@ -31,8 +31,6 @@ public class CreateSampleMesh : MonoBehaviour {
 		Debug.Log ("trying to load " + url);
 		WebClient webClient = new WebClient ();
 
-
-
 		webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownCompleted);
 		webClient.DownloadStringAsync (new System.Uri(url));
 	}
@@ -52,22 +50,18 @@ public class CreateSampleMesh : MonoBehaviour {
 			load_mesh = false;
 			LoadMesh(Vertex, UV_MaterialDisplay, Triangles);
 		}
+
+		Input.GetMouseButton (0);
 	}
 
 	void LoadMesh(Vector3[] vertices, Vector2[] uvs, int[] triangles)
 	{
-//		Mesh mesh = new Mesh ();
-//		if(!transform.GetComponent<MeshFilter> () ||  !transform.GetComponent<MeshRenderer> () ) //If you will havent got any meshrenderer or filter
-//		{
-//			transform.gameObject.AddComponent<MeshFilter>();
-//			transform.gameObject.AddComponent<MeshRenderer>();
-//		}
-
-		Mesh mesh = transform.GetComponent<MeshFilter> ().mesh;
-		Material material = transform.GetComponent<Renderer> ().material;
+		Mesh mesh = GetComponent<MeshFilter> ().mesh;
+		Material material = new Material(GetComponent<Renderer> ().material);
 
 		var texture = CreateTextureFromPng ("Assets/Resources/eric_selfy.jpg");
 		material.SetTexture ("_MainTex", texture );
+		GetComponent<Renderer> ().material = material;
 
 //		transform.GetComponent<MeshFilter> ().mesh = mesh;
 		
