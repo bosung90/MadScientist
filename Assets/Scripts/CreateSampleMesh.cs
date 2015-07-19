@@ -8,7 +8,6 @@ public class CreateSampleMesh : MonoBehaviour {
 
 	public string mesh_data_url;
 
-	public Material material;
 	string json_data;
 
 	Vector3[] Vertex;
@@ -17,10 +16,22 @@ public class CreateSampleMesh : MonoBehaviour {
 
 	bool load_mesh = false;
 
+	Texture2D	CreateTextureFromPng( string filename )
+	{
+		Texture2D newTexture = new Texture2D (0, 0);
+
+		byte[] pngData = System.IO.File.ReadAllBytes (filename);
+		newTexture.LoadImage ( pngData );
+
+		return newTexture;
+	}
+
 	public void LoadJsonString(string url)
 	{
 		Debug.Log ("trying to load " + url);
 		WebClient webClient = new WebClient ();
+
+
 
 		webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownCompleted);
 		webClient.DownloadStringAsync (new System.Uri(url));
@@ -53,7 +64,11 @@ public class CreateSampleMesh : MonoBehaviour {
 //		}
 
 		Mesh mesh = transform.GetComponent<MeshFilter> ().mesh;
-		
+		Material material = transform.GetComponent<Renderer> ().material;
+
+		var texture = CreateTextureFromPng ("Assets/Resources/eric_selfy.jpg");
+		material.SetTexture ("_MainTex", texture );
+
 //		transform.GetComponent<MeshFilter> ().mesh = mesh;
 		
 		mesh.name = "MyOwnObject";
