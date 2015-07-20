@@ -11,8 +11,6 @@ public class CMMulticastListener : MonoBehaviour
 	private string fireURL = string.Empty;
 
 	public int port = 5000;
-	private AsyncCallback callback = null;
-	private string announce_source_ip;
 	private string announce_url;
 
 	// multicast

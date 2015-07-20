@@ -15,6 +15,7 @@ public class BodyPartsCreator : MonoBehaviour {
 
 	private string jpgFilePath = "Assets/Resources/eric_selfy2.jpg";
 
+	private GameObject Placeholder;
 	public GameObject BodyPartTemplate;
 
 	//Singleton
@@ -64,6 +65,8 @@ public class BodyPartsCreator : MonoBehaviour {
 
 	private void CreateBodyPart(System.Uri meshUrl, System.Uri jpgUrl)
 	{
+		Placeholder = Instantiate (BodyPartTemplate) as GameObject;
+		
 		//download jpg and save into a jpg file.
 		Debug.Log ("trying to load " + meshUrl.AbsoluteUri);
 		WebClient webClient = new WebClient ();
@@ -153,14 +156,12 @@ public class BodyPartsCreator : MonoBehaviour {
 
 	private void LoadMesh(Vector3[] vertices, Vector2[] uvs, int[] triangles)
 	{
-		GameObject newTemplate = Instantiate (BodyPartTemplate) as GameObject;
-
-		Mesh mesh = newTemplate.GetComponent<MeshFilter> ().mesh;
-		Material material = new Material(newTemplate.GetComponent<Renderer> ().material);
+		Mesh mesh = Placeholder.GetComponent<MeshFilter> ().mesh;
+		Material material = new Material(Placeholder.GetComponent<Renderer> ().material);
 
 		var texture = CreateTextureFromPng ("Assets/Resources/eric_selfy.jpg");
 		material.SetTexture ("_MainTex", texture );
-		newTemplate.GetComponent<Renderer> ().material = material;
+		Placeholder.GetComponent<Renderer> ().material = material;
 		
 		mesh.name = "MyOwnObject";
 		
