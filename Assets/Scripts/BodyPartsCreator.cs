@@ -13,7 +13,8 @@ public class BodyPartsCreator : MonoBehaviour {
 
 	bool loading = false;
 
-	private string jpgFilePath = "Assets/Resources/eric_selfy2.jpg";
+//	private string jpgFilePath = "Assets/Resources/eric_selfy2.jpg";
+	private System.Uri jpgUrlPath;
 
 	private GameObject Placeholder;
 	public GameObject BodyPartTemplate;
@@ -74,17 +75,7 @@ public class BodyPartsCreator : MonoBehaviour {
 		webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownCompleted);
 		webClient.DownloadStringAsync (meshUrl);
 
-//		Debug.Log ("trying to load " + jpgUrl.AbsoluteUri);
-//		WebClient webClient2 = new WebClient ();
-//		
-//		webClient2.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler (JpgDownCompleted);
-//		webClient2.DownloadFileAsync(jpgUrl, jpgFilePath);
-	}
-
-	void JpgDownCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-	{
-		Debug.Log (e.Error.Message);
-
+		jpgUrlPath = jpgUrl;
 
 	}
 
@@ -158,8 +149,8 @@ public class BodyPartsCreator : MonoBehaviour {
 	{
 		Mesh mesh = Placeholder.GetComponent<MeshFilter> ().mesh;
 		Material material = new Material(Placeholder.GetComponent<Renderer> ().material);
+		var texture = CreateTextureFromUrl (jpgUrlPath);
 
-		var texture = CreateTextureFromPng ("Assets/Resources/eric_selfy.jpg");
 		material.SetTexture ("_MainTex", texture );
 		Placeholder.GetComponent<Renderer> ().material = material;
 		
@@ -183,14 +174,15 @@ public class BodyPartsCreator : MonoBehaviour {
 		DownCompleted (null, null);
 	}
 
-//	private void LoadJsonAndJpg(string jsonUrl, string jpg)
-//	{
-//		Debug.Log ("trying to load " + url);
-//		WebClient webClient = new WebClient ();
-//		
-//		webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownCompleted);
-//		webClient.DownloadStringAsync (new System.Uri(url));
-//	}
+	private Texture2D CreateTextureFromUrl(System.Uri url)
+	{
+		Texture2D newTexture = new Texture2D (0, 0);
+		
+		byte[] pngData = new WebClient().DownloadData(url);
+		newTexture.LoadImage ( pngData );
+		
+		return newTexture;
+	}
 
 	private Texture2D CreateTextureFromPng( string filename )
 	{

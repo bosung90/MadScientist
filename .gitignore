@@ -22,3 +22,5 @@ sysinfo.txt
 
 # Visual Studio 2015 cache/options directory
 .vs/
+MadScientist_Data/
+MadScientist.exe

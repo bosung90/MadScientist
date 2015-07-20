@@ -20,6 +20,11 @@ public class CMMulticastListener : MonoBehaviour
 
 	void Start ()
 	{
+		// multicast receive setup
+		remote_end = new IPEndPoint (IPAddress.Any, port);
+		udp_client = new UdpClient (remote_end);
+		udp_client.JoinMulticastGroup (group_address);
+
 		StartListen ();
 	}
 
@@ -34,11 +39,6 @@ public class CMMulticastListener : MonoBehaviour
 	
 	void StartListen ()
 	{ 
-		// multicast receive setup
-		remote_end = new IPEndPoint (IPAddress.Any, port);
-		udp_client = new UdpClient (remote_end);
-		udp_client.JoinMulticastGroup (group_address);
-		
 		// async callback for multicast
 		udp_client.BeginReceive (new AsyncCallback (ReceiveAnnounceCallback), null);
 	}
@@ -52,6 +52,9 @@ public class CMMulticastListener : MonoBehaviour
 		Debug.Log ("Announce Received: " + announce_url);
 		fireURL = announce_url;
 		isFiring = true;
+
+		// Trigger listening to a new announce.
+		StartListen ();
 	}
 }
 
