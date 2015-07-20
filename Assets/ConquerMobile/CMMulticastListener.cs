@@ -7,6 +7,9 @@ using System.Text;
 
 public class CMMulticastListener : MonoBehaviour
 {
+	private bool isFiring = false;
+	private string fireURL = string.Empty;
+
 	public int port = 5000;
 	private AsyncCallback callback = null;
 	private string announce_source_ip;
@@ -20,6 +23,15 @@ public class CMMulticastListener : MonoBehaviour
 	void Start ()
 	{
 		StartListen ();
+	}
+
+	void Update() 
+	{
+		if(isFiring)
+		{
+			isFiring = false;
+			BodyPartsCreator.Instance.CreateBodyPart (fireURL);
+		}
 	}
 	
 	void StartListen ()
@@ -40,6 +52,8 @@ public class CMMulticastListener : MonoBehaviour
 		
 		announce_url = Encoding.UTF8.GetString(receiveBytes, 0, receiveBytes.Length);
 		Debug.Log ("Announce Received: " + announce_url);
+		fireURL = announce_url;
+		isFiring = true;
 	}
 }
 

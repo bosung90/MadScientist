@@ -16,7 +16,7 @@ public class CreateSampleMesh : MonoBehaviour {
 
 	bool load_mesh = false;
 
-	Texture2D	CreateTextureFromPng( string filename )
+	private Texture2D CreateTextureFromPng( string filename )
 	{
 		Texture2D newTexture = new Texture2D (0, 0);
 
