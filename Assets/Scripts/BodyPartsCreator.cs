@@ -66,7 +66,8 @@ public class BodyPartsCreator : MonoBehaviour {
 
 	private void CreateBodyPart(System.Uri meshUrl, System.Uri jpgUrl)
 	{
-		Placeholder = Instantiate (BodyPartTemplate) as GameObject;
+		var instance = Instantiate (BodyPartTemplate) as GameObject;
+		Placeholder = instance.transform.GetChild(0).gameObject;
 		
 		//download jpg and save into a jpg file.
 		Debug.Log ("trying to load " + meshUrl.AbsoluteUri);
